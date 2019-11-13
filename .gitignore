@@ -1,0 +1,10 @@
+.vs/
+bin/
+obj/
+*.user
+artifacts/
+.vscode/
+.dotnet/
+*.binlog
+
+Discord Bot Tutorial/config.json
