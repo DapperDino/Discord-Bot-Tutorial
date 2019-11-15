@@ -1,4 +1,5 @@
-﻿using DSharpPlus;
+﻿using DiscordBotTutorial.Commands;
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.EventArgs;
 using Newtonsoft.Json;
@@ -29,7 +30,7 @@ namespace DiscordBotTutorial
                 TokenType = TokenType.Bot,
                 AutoReconnect = true,
                 LogLevel = LogLevel.Debug,
-                UseInternalLogHandler = true
+                UseInternalLogHandler = true,
             };
 
             Client = new DiscordClient(config);
@@ -40,10 +41,13 @@ namespace DiscordBotTutorial
             {
                 StringPrefixes = new string[] { configJson.Prefix },
                 EnableDms = false,
-                EnableMentionPrefix = true
+                EnableMentionPrefix = true,
+                DmHelp = true,
             };
 
             Commands = Client.UseCommandsNext(commandsConfig);
+
+            Commands.RegisterCommands<FunCommands>();
 
             await Client.ConnectAsync();
 
