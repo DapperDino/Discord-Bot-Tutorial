@@ -2,7 +2,9 @@
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.EventArgs;
+using DSharpPlus.Interactivity;
 using Newtonsoft.Json;
+using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,7 @@ namespace DiscordBotTutorial
     public class Bot
     {
         public DiscordClient Client { get; private set; }
+        public InteractivityExtension Interactivity { get; private set; }
         public CommandsNextExtension Commands { get; private set; }
 
         public async Task RunAsync()
@@ -37,6 +40,11 @@ namespace DiscordBotTutorial
 
             Client.Ready += OnClientReady;
 
+            Client.UseInteractivity(new InteractivityConfiguration
+            {
+                Timeout = TimeSpan.FromMinutes(2)
+            });
+
             var commandsConfig = new CommandsNextConfiguration
             {
                 StringPrefixes = new string[] { configJson.Prefix },
@@ -48,6 +56,7 @@ namespace DiscordBotTutorial
             Commands = Client.UseCommandsNext(commandsConfig);
 
             Commands.RegisterCommands<FunCommands>();
+            Commands.RegisterCommands<TeamCommands>();
 
             await Client.ConnectAsync();
 

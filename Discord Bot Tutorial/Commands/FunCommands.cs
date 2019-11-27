@@ -1,5 +1,6 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.Interactivity;
 using System.Threading.Tasks;
 
 namespace DiscordBotTutorial.Commands
@@ -23,6 +24,26 @@ namespace DiscordBotTutorial.Commands
             await ctx.Channel
                 .SendMessageAsync((numberOne + numberTwo).ToString())
                 .ConfigureAwait(false);
+        }
+
+        [Command("respondmessage")]
+        public async Task RespondMessage(CommandContext ctx)
+        {
+            var interactivity = ctx.Client.GetInteractivity();
+
+            var message = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel).ConfigureAwait(false);
+
+            await ctx.Channel.SendMessageAsync(message.Result.Content);
+        }
+
+        [Command("respondreaction")]
+        public async Task RespondReaction(CommandContext ctx)
+        {
+            var interactivity = ctx.Client.GetInteractivity();
+
+            var message = await interactivity.WaitForReactionAsync(x => x.Channel == ctx.Channel).ConfigureAwait(false);
+
+            await ctx.Channel.SendMessageAsync(message.Result.Emoji);
         }
     }
 }
