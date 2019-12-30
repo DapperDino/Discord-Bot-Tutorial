@@ -1,4 +1,6 @@
 ﻿using DiscordBotTutorial.Attributes;
+using DiscordBotTutorial.Handlers.Dialogue;
+using DiscordBotTutorial.Handlers.Dialogue.Steps;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
@@ -65,7 +67,7 @@ namespace DiscordBotTutorial.Commands
 
             var pollMessage = await ctx.Channel.SendMessageAsync(embed: pollEmbed).ConfigureAwait(false);
 
-            foreach(var option in emojiOptions)
+            foreach (var option in emojiOptions)
             {
                 await pollMessage.CreateReactionAsync(option).ConfigureAwait(false);
             }
@@ -76,6 +78,45 @@ namespace DiscordBotTutorial.Commands
             var results = distinctResult.Select(x => $"{x.Emoji}: {x.Total}");
 
             await ctx.Channel.SendMessageAsync(string.Join("\n", results)).ConfigureAwait(false);
+        }
+
+        [Command("dialogue")]
+        public async Task Dialogue(CommandContext ctx)
+        {
+            var inputStep = new TextStep("Enter something interesting!", null, 10);
+            var funnyStep = new IntStep("Haha, funny", null, maxValue: 100);
+
+            string input = string.Empty;
+            int value = 0;
+
+            inputStep.OnValidResult += (result) =>
+            {
+                input = result;
+
+                if (result == "something interesting")
+                {
+                    inputStep.SetNextStep(funnyStep);
+                }
+            };
+
+            funnyStep.OnValidResult += (result) => value = result;
+
+            var userChannel = await ctx.Member.CreateDmChannelAsync().ConfigureAwait(false);
+
+            var inputDialogueHandler = new DialogueHandler(
+                ctx.Client,
+                userChannel,
+                ctx.User,
+                inputStep
+            );
+
+            bool succeeded = await inputDialogueHandler.ProcessDialogue().ConfigureAwait(false);
+
+            if (!succeeded) { return; }
+
+            await ctx.Channel.SendMessageAsync(input).ConfigureAwait(false);
+
+            await ctx.Channel.SendMessageAsync(value.ToString()).ConfigureAwait(false);
         }
     }
 }

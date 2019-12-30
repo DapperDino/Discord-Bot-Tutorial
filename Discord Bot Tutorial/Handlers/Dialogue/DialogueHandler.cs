@@ -13,7 +13,6 @@ namespace DiscordBotTutorial.Handlers.Dialogue
         private readonly DiscordUser _user;
         private IDialogueStep _currentStep;
 
-
         public DialogueHandler(
             DiscordClient client,
             DiscordChannel channel,
