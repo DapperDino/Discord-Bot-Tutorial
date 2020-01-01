@@ -6,6 +6,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -117,6 +118,32 @@ namespace DiscordBotTutorial.Commands
             await ctx.Channel.SendMessageAsync(input).ConfigureAwait(false);
 
             await ctx.Channel.SendMessageAsync(value.ToString()).ConfigureAwait(false);
+        }
+
+        [Command("emojidialogue")]
+        public async Task EmojiDialogue(CommandContext ctx)
+        {
+            var yesStep = new TextStep("You chose yes", null);
+            var noStep = new IntStep("You chose no", null);
+
+            var emojiStep = new ReactionStep("Yes Or No?", new Dictionary<DiscordEmoji, ReactionStepData>
+            {
+                { DiscordEmoji.FromName(ctx.Client, ":thumbsup:"), new ReactionStepData { Content = "This means yes", NextStep = yesStep } },
+                { DiscordEmoji.FromName(ctx.Client, ":thumbsdown:"), new ReactionStepData { Content = "This means no", NextStep = noStep } }
+            });
+
+            var userChannel = await ctx.Member.CreateDmChannelAsync().ConfigureAwait(false);
+
+            var inputDialogueHandler = new DialogueHandler(
+                ctx.Client,
+                userChannel,
+                ctx.User,
+                emojiStep
+            );
+
+            bool succeeded = await inputDialogueHandler.ProcessDialogue().ConfigureAwait(false);
+
+            if (!succeeded) { return; }
         }
     }
 }
