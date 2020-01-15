@@ -12,13 +12,6 @@ namespace DiscordBotTutorial.Bots.Commands
 {
     public class TeamCommands : BaseCommandModule
     {
-        private readonly RPGContext _context;
-
-        public TeamCommands(RPGContext context)
-        {
-            _context = context;
-        }
-
         [Command("join")]
         public async Task Join(CommandContext ctx)
         {
@@ -51,19 +44,6 @@ namespace DiscordBotTutorial.Bots.Commands
             }
 
             await joinMessage.DeleteAsync().ConfigureAwait(false);
-        }
-
-        [Command("additem")]
-        public async Task AddItem(CommandContext ctx, string name)
-        {
-            await _context.Items.AddAsync(new Item { Name = name, Description = "Test Description" }).ConfigureAwait(false);
-            await _context.SaveChangesAsync().ConfigureAwait(false);
-        }
-
-        [Command("item")]
-        public async Task Item(CommandContext ctx, string name)
-        {
-            var items = await _context.Items.ToListAsync().ConfigureAwait(false);
         }
     }
 }

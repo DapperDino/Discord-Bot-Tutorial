@@ -11,7 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DiscordBotTutorial.DAL", "D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiscordBotTutorial.DAL", "DiscordBotTutorial.DAL\DiscordBotTutorial.DAL.csproj", "{FFF854FA-9C07-4B7A-9463-B2B4F09BFDA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordBotTutorial.DAL.Migrations", "DiscordBotTutorial.DAL.Migrations\DiscordBotTutorial.DAL.Migrations.csproj", "{FFE45697-3154-43A7-AA75-61611C03A6B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiscordBotTutorial.DAL.Migrations", "DiscordBotTutorial.DAL.Migrations\DiscordBotTutorial.DAL.Migrations.csproj", "{FFE45697-3154-43A7-AA75-61611C03A6B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DiscordBotTutorial.Core", "DiscordBotTutorial.Core", "{2EF275BC-EBFC-4EEA-B6FB-C538769D949F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordBotTutorial.Core", "DiscordBotTutorial.Core\DiscordBotTutorial.Core.csproj", "{9E588747-8C34-4195-908B-DEE067CA8730}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +35,10 @@ Global
 		{FFE45697-3154-43A7-AA75-61611C03A6B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFE45697-3154-43A7-AA75-61611C03A6B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFE45697-3154-43A7-AA75-61611C03A6B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E588747-8C34-4195-908B-DEE067CA8730}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E588747-8C34-4195-908B-DEE067CA8730}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E588747-8C34-4195-908B-DEE067CA8730}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E588747-8C34-4195-908B-DEE067CA8730}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +47,7 @@ Global
 		{FFDDF813-28AF-4DFB-9A25-0F1B433861AD} = {54EDCAFA-5B55-40F7-87AE-438B95B667F5}
 		{FFF854FA-9C07-4B7A-9463-B2B4F09BFDA3} = {9BF6D10F-AF76-452E-8074-0CB76B732512}
 		{FFE45697-3154-43A7-AA75-61611C03A6B7} = {9BF6D10F-AF76-452E-8074-0CB76B732512}
+		{9E588747-8C34-4195-908B-DEE067CA8730} = {2EF275BC-EBFC-4EEA-B6FB-C538769D949F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7C02F7DE-4411-4214-A4F7-D3D3F75CA706}

@@ -1,4 +1,5 @@
-﻿using DiscordBotTutorial.DAL;
+﻿using DiscordBotTutorial.Core.Services.Items;
+using DiscordBotTutorial.DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,10 @@ namespace DiscordBotTutorial.Bots
             {
                 options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=RPGContext;Trusted_Connection=True;MultipleActiveResultSets=true",
                     x => x.MigrationsAssembly("DiscordBotTutorial.DAL.Migrations"));
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
+
+            services.AddScoped<IItemService, ItemService>();
 
             var serviceProvider = services.BuildServiceProvider();
 

@@ -57,6 +57,7 @@ namespace DiscordBotTutorial.Bots
             Commands = Client.UseCommandsNext(commandsConfig);
 
             Commands.RegisterCommands<FunCommands>();
+            Commands.RegisterCommands<RPGCommands>();
             Commands.RegisterCommands<TeamCommands>();
 
             Client.ConnectAsync();

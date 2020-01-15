@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DiscordBotTutorial.Core\DiscordBotTutorial.Core.csproj" />
     <ProjectReference Include="..\DiscordBotTutorial.DAL.Migrations\DiscordBotTutorial.DAL.Migrations.csproj" />
     <ProjectReference Include="..\DiscordBotTutorial.DAL\DiscordBotTutorial.DAL.csproj" />
   </ItemGroup>
