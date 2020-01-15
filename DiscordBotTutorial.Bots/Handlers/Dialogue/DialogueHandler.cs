@@ -1,10 +1,10 @@
-﻿using DiscordBotTutorial.Handlers.Dialogue.Steps;
+﻿using DiscordBotTutorial.Bots.Handlers.Dialogue.Steps;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DiscordBotTutorial.Handlers.Dialogue
+namespace DiscordBotTutorial.Bots.Handlers.Dialogue
 {
     public class DialogueHandler
     {

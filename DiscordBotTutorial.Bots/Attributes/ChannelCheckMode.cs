@@ -1,4 +1,4 @@
-﻿namespace DiscordBotTutorial.Attributes
+﻿namespace DiscordBotTutorial.Bots.Attributes
 {
     public enum ChannelCheckMode
     {

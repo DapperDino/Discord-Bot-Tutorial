@@ -1,6 +1,6 @@
-﻿using DiscordBotTutorial.Attributes;
-using DiscordBotTutorial.Handlers.Dialogue;
-using DiscordBotTutorial.Handlers.Dialogue.Steps;
+﻿using DiscordBotTutorial.Bots.Attributes;
+using DiscordBotTutorial.Bots.Handlers.Dialogue;
+using DiscordBotTutorial.Bots.Handlers.Dialogue.Steps;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DiscordBotTutorial.Commands
+namespace DiscordBotTutorial.Bots.Commands
 {
     public class FunCommands : BaseCommandModule
     {

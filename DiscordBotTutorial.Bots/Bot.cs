@@ -1,4 +1,4 @@
-﻿using DiscordBotTutorial.Commands;
+﻿using DiscordBotTutorial.Bots.Commands;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.EventArgs;
@@ -9,7 +9,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiscordBotTutorial
+namespace DiscordBotTutorial.Bots
 {
     public class Bot
     {
@@ -17,13 +17,13 @@ namespace DiscordBotTutorial
         public InteractivityExtension Interactivity { get; private set; }
         public CommandsNextExtension Commands { get; private set; }
 
-        public async Task RunAsync()
+        public Bot(IServiceProvider services)
         {
             var json = string.Empty;
 
             using (var fs = File.OpenRead("config.json"))
             using (var sr = new StreamReader(fs, new UTF8Encoding(false)))
-                json = await sr.ReadToEndAsync().ConfigureAwait(false);
+                json = sr.ReadToEnd();
 
             var configJson = JsonConvert.DeserializeObject<ConfigJson>(json);
 
@@ -51,6 +51,7 @@ namespace DiscordBotTutorial
                 EnableDms = false,
                 EnableMentionPrefix = true,
                 DmHelp = true,
+                Services = services
             };
 
             Commands = Client.UseCommandsNext(commandsConfig);
@@ -58,9 +59,7 @@ namespace DiscordBotTutorial
             Commands.RegisterCommands<FunCommands>();
             Commands.RegisterCommands<TeamCommands>();
 
-            await Client.ConnectAsync();
-
-            await Task.Delay(-1);
+            Client.ConnectAsync();
         }
 
         private Task OnClientReady(ReadyEventArgs e)

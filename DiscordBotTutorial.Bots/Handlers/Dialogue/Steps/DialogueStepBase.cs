@@ -3,7 +3,7 @@ using DSharpPlus.Entities;
 using System;
 using System.Threading.Tasks;
 
-namespace DiscordBotTutorial.Handlers.Dialogue.Steps
+namespace DiscordBotTutorial.Bots.Handlers.Dialogue.Steps
 {
     public abstract class DialogueStepBase : IDialogueStep
     {
