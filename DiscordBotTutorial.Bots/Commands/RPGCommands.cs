@@ -1,6 +1,7 @@
 ﻿using DiscordBotTutorial.Bots.Handlers.Dialogue;
 using DiscordBotTutorial.Bots.Handlers.Dialogue.Steps;
 using DiscordBotTutorial.Core.Services.Items;
+using DiscordBotTutorial.DAL.Models.Items;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using System.Threading.Tasks;
@@ -14,6 +15,36 @@ namespace DiscordBotTutorial.Bots.Commands
         public RPGCommands(IItemService itemService)
         {
             _itemService = itemService;
+        }
+
+        [Command("createitem")]
+        [RequireRoles(RoleCheckMode.Any, "Admin")]
+        public async Task CreateItem(CommandContext ctx)
+        {
+            var itemDescriptionStep = new TextStep("What is the item about?", null);
+            var itemNameStep = new TextStep("What will the item be called?", itemDescriptionStep);
+
+            var item = new Item();
+
+            itemNameStep.OnValidResult += (result) => item.Name = result;
+            itemDescriptionStep.OnValidResult += (result) => item.Description = result;
+
+            var userChannel = await ctx.Member.CreateDmChannelAsync().ConfigureAwait(false);
+
+            var inputDialogueHandler = new DialogueHandler(
+                ctx.Client,
+                userChannel,
+                ctx.User,
+                itemNameStep
+            );
+
+            bool succeeded = await inputDialogueHandler.ProcessDialogue().ConfigureAwait(false);
+
+            if (!succeeded) { return; }
+
+            await _itemService.CreateNewItemAsync(item).ConfigureAwait(false);
+
+            await ctx.Channel.SendMessageAsync($"Item {item.Name} succesfully created!").ConfigureAwait(false);
         }
 
         [Command("iteminfo")]
