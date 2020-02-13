@@ -8,7 +8,7 @@ namespace DiscordBotTutorial.Core.Services.Items
     public interface IItemService
     {
         Task CreateNewItemAsync(Item item);
-        Task<Item> GetItemByName(string itemName);
+        Task<Item> GetItemByNameAsync(string itemName);
     }
 
     public class ItemService : IItemService
@@ -20,19 +20,16 @@ namespace DiscordBotTutorial.Core.Services.Items
             _context = context;
         }
 
-        public async Task CreateNewItemAsync(Item item)
+        public Task CreateNewItemAsync(Item item)
         {
-            await _context.AddAsync(item).ConfigureAwait(false);
+            _context.Add(item);
 
-            await _context.SaveChangesAsync().ConfigureAwait(false);
+            return _context.SaveChangesAsync();
         }
 
-        public async Task<Item> GetItemByName(string itemName)
+        public Task<Item> GetItemByNameAsync(string itemName)
         {
-            itemName = itemName.ToLower();
-
-            return await _context.Items
-                .FirstOrDefaultAsync(x => x.Name.ToLower() == itemName).ConfigureAwait(false);
+            return _context.Items.FirstOrDefaultAsync(x => x.Name.ToLower() == itemName.ToLower());
         }
     }
 }

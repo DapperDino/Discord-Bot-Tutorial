@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace DiscordBotTutorial.Bots.Commands
 {
-    public class RPGCommands : BaseCommandModule
+    public class ItemCommands : BaseCommandModule
     {
         private readonly IItemService _itemService;
 
-        public RPGCommands(IItemService itemService)
+        public ItemCommands(IItemService itemService)
         {
             _itemService = itemService;
         }
@@ -67,7 +67,7 @@ namespace DiscordBotTutorial.Bots.Commands
 
             if (!succeeded) { return; }
 
-            var item = await _itemService.GetItemByName(itemName).ConfigureAwait(false);
+            var item = await _itemService.GetItemByNameAsync(itemName).ConfigureAwait(false);
 
             if (item == null)
             {

@@ -1,4 +1,5 @@
 ﻿using DiscordBotTutorial.Core.Services.Items;
+using DiscordBotTutorial.Core.Services.Profiles;
 using DiscordBotTutorial.DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -19,6 +20,7 @@ namespace DiscordBotTutorial.Bots
             });
 
             services.AddScoped<IItemService, ItemService>();
+            services.AddScoped<IProfileService, ProfileService>();
 
             var serviceProvider = services.BuildServiceProvider();
 
