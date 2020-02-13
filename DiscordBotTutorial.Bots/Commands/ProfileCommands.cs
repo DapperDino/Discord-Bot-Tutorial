@@ -32,9 +32,12 @@ namespace DiscordBotTutorial.Bots.Commands
         {
             Profile profile = await _profileService.GetOrCreateProfileAsync(memberId, ctx.Guild.Id);
 
+            DiscordMember member = ctx.Guild.Members[profile.DiscordId];
+
             var profileEmbed = new DiscordEmbedBuilder
             {
-                Title = $"{ctx.Guild.Members[profile.DiscordId].DisplayName}'s Profile"
+                Title = $"{member.DisplayName}'s Profile",
+                ThumbnailUrl = member.AvatarUrl
             };
 
             profileEmbed.AddField("Xp", profile.Xp.ToString());
