@@ -13,23 +13,27 @@ namespace DiscordBotTutorial.Core.Services.Items
 
     public class ItemService : IItemService
     {
-        private readonly RPGContext _context;
+        private readonly DbContextOptions<RPGContext> _options;
 
-        public ItemService(RPGContext context)
+        public ItemService(DbContextOptions<RPGContext> options)
         {
-            _context = context;
+            _options = options;
         }
 
         public Task CreateNewItemAsync(Item item)
         {
-            _context.Add(item);
+            using var context = new RPGContext(_options);
 
-            return _context.SaveChangesAsync();
+            context.Add(item);
+
+            return context.SaveChangesAsync();
         }
 
         public Task<Item> GetItemByNameAsync(string itemName)
         {
-            return _context.Items.FirstOrDefaultAsync(x => x.Name.ToLower() == itemName.ToLower());
+            using var context = new RPGContext(_options);
+
+            return context.Items.FirstOrDefaultAsync(x => x.Name.ToLower() == itemName.ToLower());
         }
     }
 }

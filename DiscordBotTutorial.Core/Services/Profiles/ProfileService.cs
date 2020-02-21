@@ -13,16 +13,18 @@ namespace DiscordBotTutorial.Core.Services.Profiles
 
     public class ProfileService : IProfileService
     {
-        private readonly RPGContext _context;
+        private readonly DbContextOptions<RPGContext> _options;
 
-        public ProfileService(RPGContext context)
+        public ProfileService(DbContextOptions<RPGContext> options)
         {
-            _context = context;
+            _options = options;
         }
 
         public async Task<Profile> GetOrCreateProfileAsync(ulong discordId, ulong guildId)
         {
-            var profile = await _context.Profiles
+            using var context = new RPGContext(_options);
+
+            var profile = await context.Profiles
                 .Where(x => x.GuildId == guildId)
                 .FirstOrDefaultAsync(x => x.DiscordId == discordId).ConfigureAwait(false);
 
@@ -34,9 +36,9 @@ namespace DiscordBotTutorial.Core.Services.Profiles
                 GuildId = guildId
             };
 
-            _context.Add(profile);
+            context.Add(profile);
 
-            await _context.SaveChangesAsync().ConfigureAwait(false);
+            await context.SaveChangesAsync().ConfigureAwait(false);
 
             return profile;
         }

@@ -5,5 +5,6 @@
         public ulong DiscordId { get; set; }
         public ulong GuildId { get; set; }
         public int Xp { get; set; }
+        public int Level => Xp / 100;
     }
 }

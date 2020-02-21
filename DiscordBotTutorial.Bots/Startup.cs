@@ -20,6 +20,7 @@ namespace DiscordBotTutorial.Bots
             });
 
             services.AddScoped<IItemService, ItemService>();
+            services.AddScoped<IExperienceService, ExperienceService>();
             services.AddScoped<IProfileService, ProfileService>();
 
             var serviceProvider = services.BuildServiceProvider();
