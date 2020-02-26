@@ -18,6 +18,13 @@ namespace DiscordBotTutorial.Core.Services.Profiles
         public ProfileService(DbContextOptions<RPGContext> options)
         {
             _options = options;
+
+            //using var context = new RPGContext(_options);
+
+            //var profiles = context.Profiles.ToList();
+            //profiles.ForEach(x => x.Gold = 100);
+            //context.Profiles.UpdateRange(profiles);
+            //context.SaveChanges();
         }
 
         public async Task<Profile> GetOrCreateProfileAsync(ulong discordId, ulong guildId)
@@ -26,6 +33,8 @@ namespace DiscordBotTutorial.Core.Services.Profiles
 
             var profile = await context.Profiles
                 .Where(x => x.GuildId == guildId)
+                .Include(x => x.Items)
+                .Include(x => x.Items).ThenInclude(x => x.Item)
                 .FirstOrDefaultAsync(x => x.DiscordId == discordId).ConfigureAwait(false);
 
             if (profile != null) { return profile; }
@@ -33,7 +42,8 @@ namespace DiscordBotTutorial.Core.Services.Profiles
             profile = new Profile
             {
                 DiscordId = discordId,
-                GuildId = guildId
+                GuildId = guildId,
+                Gold = 100
             };
 
             context.Add(profile);

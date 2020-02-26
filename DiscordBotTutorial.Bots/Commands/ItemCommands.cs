@@ -4,6 +4,7 @@ using DiscordBotTutorial.Core.Services.Items;
 using DiscordBotTutorial.DAL.Models.Items;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using System;
 using System.Threading.Tasks;
 
 namespace DiscordBotTutorial.Bots.Commands
@@ -21,13 +22,15 @@ namespace DiscordBotTutorial.Bots.Commands
         [RequireRoles(RoleCheckMode.Any, "Admin")]
         public async Task CreateItem(CommandContext ctx)
         {
-            var itemDescriptionStep = new TextStep("What is the item about?", null);
+            var itemPriceStep = new IntStep("How much does the item cost?", null, 1);
+            var itemDescriptionStep = new TextStep("What is the item about?", itemPriceStep);
             var itemNameStep = new TextStep("What will the item be called?", itemDescriptionStep);
 
             var item = new Item();
 
             itemNameStep.OnValidResult += (result) => item.Name = result;
             itemDescriptionStep.OnValidResult += (result) => item.Description = result;
+            itemPriceStep.OnValidResult += (result) => item.Price = result;
 
             var userChannel = await ctx.Member.CreateDmChannelAsync().ConfigureAwait(false);
 
@@ -67,7 +70,7 @@ namespace DiscordBotTutorial.Bots.Commands
 
             if (!succeeded) { return; }
 
-            var item = await _itemService.GetItemByNameAsync(itemName).ConfigureAwait(false);
+            Item item = await _itemService.GetItemByNameAsync(itemName).ConfigureAwait(false);
 
             if (item == null)
             {
@@ -75,7 +78,15 @@ namespace DiscordBotTutorial.Bots.Commands
                 return;
             }
 
-            await ctx.Channel.SendMessageAsync($"Name: {item.Name}, Description: {item.Description}");
+            await ctx.Channel.SendMessageAsync($"Name: {item.Name}, Description: {item.Description}, Price: {item.Price}");
+        }
+
+        [Command("buy")]
+        public async Task Buy(CommandContext ctx, params string[] itemNameSplit)
+        {
+            string itemName = string.Join(' ', itemNameSplit);
+
+            await _itemService.PurchaseItemAsync(ctx.Member.Id, ctx.Guild.Id, itemName);
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using DiscordBotTutorial.Core.Services.Profiles;
-using DiscordBotTutorial.Core.ViewModels;
 using DiscordBotTutorial.DAL.Models.Profiles;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DiscordBotTutorial.Bots.Commands
@@ -11,12 +11,10 @@ namespace DiscordBotTutorial.Bots.Commands
     public class ProfileCommands : BaseCommandModule
     {
         private readonly IProfileService _profileService;
-        private readonly IExperienceService _experienceService;
 
-        public ProfileCommands(IProfileService profileService, IExperienceService experienceService)
+        public ProfileCommands(IProfileService profileService)
         {
             _profileService = profileService;
-            _experienceService = experienceService;
         }
 
         [Command("profile")]
@@ -44,20 +42,14 @@ namespace DiscordBotTutorial.Bots.Commands
             };
 
             profileEmbed.AddField("Level", profile.Level.ToString());
+            profileEmbed.AddField("Xp", profile.Xp.ToString());
+            profileEmbed.AddField("Gold", profile.Gold.ToString());
+            if (profile.Items.Count > 0)
+            {
+                profileEmbed.AddField("Items", string.Join(", ", profile.Items.Select(x => x.Item.Name)));
+            }
 
             await ctx.Channel.SendMessageAsync(embed: profileEmbed).ConfigureAwait(false);
-
-            GrantXpViewModel viewModel = await _experienceService.GrantXpAsync(memberId, ctx.Guild.Id, 100).ConfigureAwait(false);
-
-            if (!viewModel.LevelledUp) { return; }
-
-            var levelUpEmbed = new DiscordEmbedBuilder
-            {
-                Title = $"{member.DisplayName} Is Now Level {viewModel.Profile.Level}",
-                ThumbnailUrl = member.AvatarUrl
-            };
-
-            await ctx.Channel.SendMessageAsync(embed: levelUpEmbed).ConfigureAwait(false);
         }
     }
 }
