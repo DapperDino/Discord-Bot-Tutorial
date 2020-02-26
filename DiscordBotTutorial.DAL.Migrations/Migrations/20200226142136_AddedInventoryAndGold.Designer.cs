@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DiscordBotTutorial.DAL.Migrations.Migrations
 {
     [DbContext(typeof(RPGContext))]
-    [Migration("20200226135159_AddedInventoryAndGold")]
+    [Migration("20200226142136_AddedInventoryAndGold")]
     partial class AddedInventoryAndGold
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,7 +60,7 @@ namespace DiscordBotTutorial.DAL.Migrations.Migrations
 
                     b.HasIndex("ProfileId");
 
-                    b.ToTable("ProfileItem");
+                    b.ToTable("ProfileItems");
                 });
 
             modelBuilder.Entity("DiscordBotTutorial.DAL.Models.Profiles.Profile", b =>

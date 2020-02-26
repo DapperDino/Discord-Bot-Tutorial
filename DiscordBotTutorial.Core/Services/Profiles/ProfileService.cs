@@ -18,13 +18,6 @@ namespace DiscordBotTutorial.Core.Services.Profiles
         public ProfileService(DbContextOptions<RPGContext> options)
         {
             _options = options;
-
-            //using var context = new RPGContext(_options);
-
-            //var profiles = context.Profiles.ToList();
-            //profiles.ForEach(x => x.Gold = 100);
-            //context.Profiles.UpdateRange(profiles);
-            //context.SaveChanges();
         }
 
         public async Task<Profile> GetOrCreateProfileAsync(ulong discordId, ulong guildId)

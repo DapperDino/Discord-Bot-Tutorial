@@ -10,5 +10,6 @@ namespace DiscordBotTutorial.DAL
 
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<Item> Items { get; set; }
+        public DbSet<ProfileItem> ProfileItems { get; set; }
     }
 }

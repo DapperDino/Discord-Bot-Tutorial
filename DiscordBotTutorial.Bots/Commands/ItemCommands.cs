@@ -4,7 +4,6 @@ using DiscordBotTutorial.Core.Services.Items;
 using DiscordBotTutorial.DAL.Models.Items;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
-using System;
 using System.Threading.Tasks;
 
 namespace DiscordBotTutorial.Bots.Commands

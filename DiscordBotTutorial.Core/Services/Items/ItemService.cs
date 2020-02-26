@@ -38,7 +38,7 @@ namespace DiscordBotTutorial.Core.Services.Items
         {
             using var context = new RPGContext(_options);
 
-            return await context.Items.FirstOrDefaultAsync(x => x.Name == itemName).ConfigureAwait(false);
+            return await context.Items.FirstOrDefaultAsync(x => x.Name.ToLower() == itemName.ToLower()).ConfigureAwait(false);
         }
 
         public async Task<bool> PurchaseItemAsync(ulong discordId, ulong guildId, string itemName)
@@ -46,6 +46,8 @@ namespace DiscordBotTutorial.Core.Services.Items
             using var context = new RPGContext(_options);
 
             Item item = await GetItemByNameAsync(itemName).ConfigureAwait(false);
+
+            if (item == null) { return false; }
 
             Profile profile = await _profileService.GetOrCreateProfileAsync(discordId, guildId).ConfigureAwait(false);
 

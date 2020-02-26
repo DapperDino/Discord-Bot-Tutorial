@@ -19,7 +19,7 @@ namespace DiscordBotTutorial.DAL.Migrations.Migrations
                 defaultValue: 0);
 
             migrationBuilder.CreateTable(
-                name: "ProfileItem",
+                name: "ProfileItems",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -29,15 +29,15 @@ namespace DiscordBotTutorial.DAL.Migrations.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProfileItem", x => x.Id);
+                    table.PrimaryKey("PK_ProfileItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProfileItem_Items_ItemId",
+                        name: "FK_ProfileItems_Items_ItemId",
                         column: x => x.ItemId,
                         principalTable: "Items",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProfileItem_Profiles_ProfileId",
+                        name: "FK_ProfileItems_Profiles_ProfileId",
                         column: x => x.ProfileId,
                         principalTable: "Profiles",
                         principalColumn: "Id",
@@ -45,20 +45,20 @@ namespace DiscordBotTutorial.DAL.Migrations.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProfileItem_ItemId",
-                table: "ProfileItem",
+                name: "IX_ProfileItems_ItemId",
+                table: "ProfileItems",
                 column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProfileItem_ProfileId",
-                table: "ProfileItem",
+                name: "IX_ProfileItems_ProfileId",
+                table: "ProfileItems",
                 column: "ProfileId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ProfileItem");
+                name: "ProfileItems");
 
             migrationBuilder.DropColumn(
                 name: "Gold",

@@ -58,7 +58,7 @@ namespace DiscordBotTutorial.DAL.Migrations.Migrations
 
                     b.HasIndex("ProfileId");
 
-                    b.ToTable("ProfileItem");
+                    b.ToTable("ProfileItems");
                 });
 
             modelBuilder.Entity("DiscordBotTutorial.DAL.Models.Profiles.Profile", b =>
