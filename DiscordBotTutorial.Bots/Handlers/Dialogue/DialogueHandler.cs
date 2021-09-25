@@ -63,10 +63,7 @@ namespace DiscordBotTutorial.Bots.Handlers.Dialogue
         {
             if (_channel.IsPrivate) { return; }
 
-            foreach(var message in messages)
-            {
-                await message.DeleteAsync().ConfigureAwait(false);
-            }
+            await channel.DeleteMessagesAsync(messages).ConfigureAwait(false);
         }
     }
 }
